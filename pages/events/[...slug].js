@@ -1,11 +1,11 @@
 import { Fragment } from 'react';
 import { useRouter } from 'next/router';
 
-import { getFilteredEvents } from '../../dummy-data';
-import EventList from '../../components/events/event-list';
+import { getFilteredEvents } from '../../dummy_data';
+import EventList from '../../components/events/EventList';
 import ResultsTitle from '../../components/events/results-title';
-import Button from '../../components/ui/button';
-import ErrorAlert from '../../components/ui/error-alert';
+import Button from '../../components/ui/Button';
+import ErrorAlert from '../../components/ui/ErrorAlert';
 
 function FilteredEventsPage() {
   const router = useRouter();
@@ -65,7 +65,7 @@ function FilteredEventsPage() {
   return (
     <Fragment>
       <ResultsTitle date={date} />
-      <EventList items={filteredEvents} />
+      <EventList events={filteredEvents} />
     </Fragment>
   );
 }
