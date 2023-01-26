@@ -76,8 +76,6 @@
   height: 1.25rem;
 }
 
-
-
 @media (min-width: 768px) {
   .item {
     flex-direction: row;
@@ -85,7 +83,6 @@
 
   .item img {
     width: 40%;
-    max-width: 10rem;
     height: 14rem;
   }
 

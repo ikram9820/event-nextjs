@@ -3,30 +3,36 @@ import Button from "../ui/Button";
 import DateIcon from "../icon/DateIcon";
 import AddressIcon from "../icon/AddressIcon";
 import ArrowRightIcon from "../icon/ArrowRightIcon";
+import Image from "next/image";
 
 function EventItem({ event }) {
-  const readableTime = new Date(event.date).toLocaleDateString("en-US", {
+  const readableDate = new Date(event.date).toLocaleDateString("en-US", {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
-  const formatedAddress = event.location.replace(", ", "\n");
+  const formattedAddress = event.location.replace(", ", "\n");
   const path = `/events/${event.id}`;
 
   return (
     <li className={classes.item}>
-      <img src={'/'+event.image} alt={event.title} />
+      <Image
+        src={"/" + event.image}
+        alt={event.title}
+        width={250}
+        height={160}
+      />
       <div className={classes.content}>
         <div className={classes.summary}>
-          <h1>{event.title}</h1>
-        </div>
-        <div className={classes.date}>
-          <DateIcon />
-          <time>{readableTime}</time>
-        </div>
-        <div className={classes.address}>
-          <AddressIcon />
-          <address>{formatedAddress}</address>
+          <h2>{event.title}</h2>
+          <div className={classes.date}>
+            <DateIcon />
+            <time>{readableDate}</time>
+          </div>
+          <div className={classes.address}>
+            <AddressIcon />
+            <address>{formattedAddress}</address>
+          </div>
         </div>
         <div className={classes.actions}>
           <Button link={path}>
