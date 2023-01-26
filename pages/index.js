@@ -1,4 +1,5 @@
 import EventList from "@/components/events/EventList";
+import NewsletterRegistration from "@/components/input/newsletter-registration";
 import ErrorAlert from "@/components/ui/ErrorAlert";
 
 export default function Home(props) {
@@ -7,6 +8,7 @@ export default function Home(props) {
   }
   return (
     <>
+      <NewsletterRegistration />
       <EventList events={props.events} />
     </>
   );
