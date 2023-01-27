@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     const client = await MongoClient.connect(
       "mongodb+srv://ikram:8KCXyzoXoNtnjmAe@nextjs-course.mopw532.mongodb.net/?retryWrites=true&w=majority"
     );
-    const db = client.db("nextjs-course");
+    const db = client.db("events-nextjs");
     await db.collection("emails").insertOne({ email });
     client.close();
     res.status(201).json({ message: "subscribed successfully " });
