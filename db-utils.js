@@ -1,18 +1,22 @@
 import { MongoClient } from "mongodb";
 
-export async function getDbClient() {
+export async function connectDb() {
   const client = await MongoClient.connect(
-    "mongodb+srv://ikram:8KCXyzoXoNtnjmAe@nextjs-course.mopw532.mongodb.net/events-nextjs?retryWrites=true&w=majority"
+    "mongodb+srv://ikram:8KCXyzoXoNtnjmAe@nextjs-course.mopw532.mongodb.net/?retryWrites=true&w=majority"
   );
   return client;
 }
 
-export async function addDocument(db, collectionName, data) {
+export async function addDocument(client, collectionName, data) {
+  const db = client.db("events-nextjs");
+
   const result = await db.collection(collectionName).insertOne(data);
   return result;
 }
 
-export async function getEventComments(db, eventId) {
+export async function getEventComments(client, eventId) {
+  const db = client.db("events-nextjs");
+
   const eventComments = await db
     .collection("comments")
     .find({ eventId })

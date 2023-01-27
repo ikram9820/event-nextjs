@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
-
+import { useEffect, useState, useContext } from "react";
+import NotificationContext from "@/store/notification-context";
 import CommentList from "./comment-list";
 import NewComment from "./new-comment";
 import classes from "./comments.module.css";
 
 function Comments(props) {
   const { eventId } = props;
+  const notifCtx = useContext(NotificationContext);
 
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState([]);
@@ -25,6 +26,11 @@ function Comments(props) {
   }
 
   function addCommentHandler(commentData) {
+    notifCtx.showNotification({
+      title: "Adding...",
+      message: "Adding new comment.",
+      status: "pending",
+    });
     fetch(`/api/events/${eventId}/comments`, {
       method: "POST",
       body: JSON.stringify(commentData),
@@ -32,8 +38,28 @@ function Comments(props) {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return response.json().then((data) => {
+          throw new Error(data.message || "Something went wrong!");
+        });
+      })
+      .then((data) => {
+        notifCtx.showNotification({
+          title: "Success!",
+          message: "Successfully added comment!",
+          status: "success",
+        });
+      })
+      .catch((error) => {
+        notifCtx.showNotification({
+          title: "Error!",
+          message: error.message || "Something went wrong!",
+          status: "error",
+        });
+      });
   }
 
   return (
@@ -43,7 +69,11 @@ function Comments(props) {
       </button>
       {showComments && <NewComment onAddComment={addCommentHandler} />}
 
-      {showComments && comments && <CommentList items={comments} />}
+      {showComments && (comments.length === 0 ? (
+        <p className="center">loading comments...</p>
+      ) : (
+        <CommentList items={comments} />
+      ))}
     </section>
   );
 }

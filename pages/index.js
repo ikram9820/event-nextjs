@@ -18,6 +18,7 @@ export async function getStaticProps(context) {
   const url =
     'https://nextjs-course-e53d9-default-rtdb.asia-southeast1.firebasedatabase.app/events.json?orderBy="isFeatured"&equalTo=true';
   const events = [];
+  
   const response = await fetch(url);
   const data = await response.json();
   for (const key in data) {
